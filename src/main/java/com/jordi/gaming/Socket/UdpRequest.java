@@ -1,6 +1,8 @@
 package com.jordi.gaming.Socket;
 
 import com.jordi.gaming.Socket.Handler.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -13,6 +15,8 @@ public class UdpRequest implements Runnable {
     protected DatagramPacket packet;
 
     protected List<RequestHandlerInterface> requestHandlers;
+
+    protected static Logger logger = LoggerFactory.getLogger(UdpRequest.class);
 
     /**
      * @param socket DatagramSocket
@@ -38,6 +42,8 @@ public class UdpRequest implements Runnable {
                 continue;
             }
 
+            logger.debug("Calling requestHandler for class '" + handler.getClass().getName() + "'");
+
             handler.handle(this.socket, request, packet);
         }
     }
@@ -48,7 +54,9 @@ public class UdpRequest implements Runnable {
     protected List<RequestHandlerInterface> getDefaultRequestHandlers()
     {
         List<RequestHandlerInterface> handlers = new ArrayList<RequestHandlerInterface>();
+
         handlers.add(new PingHandler());
+        handlers.add(new UptimeHandler());
 
         return handlers;
     }

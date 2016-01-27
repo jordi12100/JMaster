@@ -38,7 +38,8 @@ public class UptimeHandler implements RequestHandlerInterface
             this.sendUptimeToSocket(udpSocket, packet.getAddress(), packet.getPort());
             logger.debug("Replied with " + new String(this.getUptimeInBytes()));
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("Could not send uptime request");
+            logger.debug(e.toString());
         }
     }
 

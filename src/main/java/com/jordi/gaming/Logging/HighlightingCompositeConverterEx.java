@@ -7,6 +7,10 @@ import ch.qos.logback.core.pattern.color.ForegroundCompositeConverterBase;
 
 public class HighlightingCompositeConverterEx extends ForegroundCompositeConverterBase<ILoggingEvent>
 {
+    /**
+     * @param event ILoggingEvent
+     * @return String
+     */
     @Override
     protected String getForegroundColorCode(ILoggingEvent event) {
         Level level = event.getLevel();
